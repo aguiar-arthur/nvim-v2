@@ -3,12 +3,15 @@ return {
   dependencies = {
     "preservim/vimux"
   },
+
+
   config = function()
-    vim.keymap.set("n", "<leader>t", ":TestNearest<CR>", {})
-    vim.keymap.set("n", "<leader>T", ":TestFile<CR>", {})
-    vim.keymap.set("n", "<leader>a", ":TestSuite<CR>", {})
-    vim.keymap.set("n", "<leader>l", ":TestLast<CR>", {})
-    vim.keymap.set("n", "<leader>g", ":TestVisit<CR>", {})
+    local opts = {desc = "which_key_ignore"}
+    vim.keymap.set("n", "<leader>t", ":TestNearest<CR>", opts)
+    vim.keymap.set("n", "<leader>T", ":TestFile<CR>", opts)
+    vim.keymap.set("n", "<leader>a", ":TestSuite<CR>", opts)
+    vim.keymap.set("n", "<leader>l", ":TestLast<CR>", opts)
+    vim.keymap.set("n", "<leader>g", ":TestVisit<CR>", opts)
     vim.cmd("let test#strategy = 'vimux'")
   end,
 }
