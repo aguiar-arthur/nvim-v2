@@ -1,4 +1,5 @@
 return {
-    "tpope/vim-sleuth",
-    "numToStr/Comment.nvim"
+	"tpope/vim-sleuth",
+	"numToStr/Comment.nvim",
+	require("plugins.languages.init"),
 }
