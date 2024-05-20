@@ -14,6 +14,13 @@ return {
 				end,
 			},
 		},
+		opts = {
+			setup = {
+				rust_analyzer = function()
+					return true
+				end,
+			},
+		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -23,12 +30,15 @@ return {
 					local keymap_l = {
 						name = "[L]SP",
 						d = { require("telescope.builtin").lsp_definitions, "Goto Definition" },
-						r = { require("telescope.builtin").lsp_references, "Goto References" },
+						R = { require("telescope.builtin").lsp_references, "Goto References" },
+						r = { vim.lsp.buf.rename, "Rename" },
 						I = { require("telescope.builtin").lsp_implementations, "Goto Implementation" },
-						D = { require("telescope.builtin").lsp_type_definitions, "Type Definition" },
+						t = { require("telescope.builtin").lsp_type_definitions, "Type Definition" },
+						D = { vim.lsp.buf.declaration, "Goto Declaration" },
 						ds = { require("telescope.builtin").lsp_document_symbols, "Document Symbols" },
 						ws = { require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols" },
 						K = { vim.lsp.buf.hover, "Hover Documentation" },
+						a = { vim.lsp.buf.code_action, "Code Action" },
 						h = {
 							function()
 								if vim.lsp.inlay_hint.is_enabled() then
@@ -42,12 +52,6 @@ return {
 					}
 
 					wk.register(keymap_l, { prefix = "<leader>l", buffer = event.buf })
-
-					wk.register({
-						["rn"] = { vim.lsp.buf.rename, "Rename" },
-						["ca"] = { vim.lsp.buf.code_action, "Code Action" },
-						["gD"] = { vim.lsp.buf.declaration, "Goto Declaration" },
-					}, { buffer = event.buf })
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.server_capabilities.documentHighlightProvider then
